@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <!-- <div class="text-left">
+                <span class="pointr" routerLink="./../" routerLinkActive="active"
+                    >Buy a commodity</span
+                >
+            </div> -->
+        </div>
+        <div class="col-4">
+            <div class="text-center">
+                <label class="blog-header-logo text-dark">BUY A COMMODITY</label>
+                <br /><br />
+            </div>
+        </div>
+        <div class="col-4">
+            <!-- <div class="text-right">
+                <span class="pointr" routerLink="./" routerLinkActive="active"
+                    >Display all my commodities</span
+                >
+            </div> -->
+        </div>
+    </div>
+    <div *ngIf="error">
+        <div class="card bg-danger p-2 mr-3 ml-3 text-center text-white">
+            {{ error }}
+        </div>
+        <br /><br />
+    </div>
+    <div *ngIf="success">
+        <div class="card bg-success p-2 mr-3 ml-3 text-center text-white">
+            {{ success }}
+        </div>
+        <br /><br />
+    </div>
+    <div class="">
+        <div class="form-group row">
+            <div class="col-sm-3 col-3 m-0">
+                <select [(ngModel)]="searchCategory" class="form-control form-control-sm">
+                    <option
+                        *ngFor="let searchCategoryValue of searchCategoryValues"
+                        [value]="searchCategoryValue"
+                    >
+                        {{ searchCategoryValue }}
+                    </option></select
+                >
+            </div>
+            <div class="col-sm-8 col-7 m-0">
+                <input [(ngModel)]="searchQuery" type="text" class="form-control form-control-sm" />
+            </div>
+            <div class="col-sm-1 col-2 m-0">
+                <button class="btn btn-sm btn-primary" (click)="searchThru()">
+                    Search
+                </button>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+    <div *ngIf="commodities" class="container">
+        <div *ngFor="let commodityList of commodities" class="row">
+            <app-commodity-card
+                class="col-lg-4"
+                *ngFor="let commodity of commodityList"
+                [commodity]="commodity"
+                [parentClassName]="parentClassName"
+            >
+            </app-commodity-card>
+        </div>
+    </div>
+    <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        (page)="pageEvent = paginatorData($event)"
+    >
+    </mat-paginator>
+</div>

@@ -1,0 +1,89 @@
+<div>
+    <!-- Area to toggle between the two types -->
+    <div class="">
+        <div class="row">
+            <!-- prettier-ignore -->
+            <div class="col-6" (click)="toggleClassHeadingsFunction()" [ngClass] = "{'background-black': !toggleClassHeadings, 'background-white': toggleClassHeadings}"><span>Sold Commodities</span></div>
+            <!-- prettier-ignore -->
+            <div class="col-6" (click)="toggleClassHeadingsFunction()" [ngClass] = "{'background-black': toggleClassHeadings, 'background-white': !toggleClassHeadings}"><span>Bought Commodities</span></div>
+        </div>
+    </div>
+
+    <div *ngIf="toggleClassHeadings; then boughtComm; else soldComm"></div>
+    <ng-template #soldComm>
+        <br /><br />
+        <div
+            *ngIf="soldCommodities && soldCommodities.length > 0; then soldTable; else noSold"
+        ></div>
+        <ng-template #soldTable>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Sold To</th>
+                        <th scope="col">Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        class="table-success"
+                        *ngFor="let commodity of soldCommodities; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.soldTo.name }}</td>
+                        <td>{{ commodity.soldTo.mobileNumber }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+        <ng-template #noSold>
+            <div class="text-center"><h4>No Data found</h4></div>
+        </ng-template>
+    </ng-template>
+    <ng-template #boughtComm
+        ><br /><br />
+        <div
+            *ngIf="
+                boughtCommodities && boughtCommodities.length > 0;
+                then boughtTable;
+                else noBought
+            "
+        ></div>
+        <ng-template #boughtTable>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Bought From</th>
+                        <th scope="col">Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        class="table-success"
+                        *ngFor="let commodity of boughtCommodities; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.user.name }}</td>
+                        <td>{{ commodity.user.mobileNumber }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+        <ng-template #noBought>
+            <div class="text-center"><h4>No Data found</h4></div>
+        </ng-template>
+    </ng-template>
+</div>

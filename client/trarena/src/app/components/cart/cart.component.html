@@ -1,0 +1,280 @@
+<div>
+    <!-- Area to toggle between the two types -->
+    <div class="">
+        <div class="row">
+            <!-- prettier-ignore -->
+            <div class="col-6" (click)="toggleClassHeadingsFunction()" [ngClass] = "{'background-black': !toggleClassHeadings, 'background-white': toggleClassHeadings}"><span>Interested Commodities</span></div>
+            <!-- prettier-ignore -->
+            <div class="col-6" (click)="toggleClassHeadingsFunction()" [ngClass] = "{'background-black': toggleClassHeadings, 'background-white': !toggleClassHeadings}"><span>My Commodities</span></div>
+        </div>
+    </div>
+
+    <div *ngIf="!toggleClassHeadings">
+        <!-- Container with the information of the table -->
+        <div
+            class="container"
+            *ngIf="
+                interestedCommodities &&
+                (interestedCommodities.present.length > 0 ||
+                    interestedCommodities.past.length > 0 ||
+                    interestedCommodities.future.length > 0)
+            "
+        >
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-success text-center text-success">
+                            Count : {{ interestedCommodities.present.length || 0 }}
+                        </div>
+                        <div class="col-6">Current Auction</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-warning text-center text-warning">
+                            Count : {{ interestedCommodities.future.length || 0 }}
+                        </div>
+                        <div class="col-6">Future Auction</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-danger text-center text-danger">
+                            Count : {{ interestedCommodities.past.length || 0 }}
+                        </div>
+                        <div class="col-6">Past Auction</div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- Container to refresh the information -->
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4 text-center">
+                <button class="btn btn-primary" (click)="refreshInterestedTable()">Refresh</button>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- Table about others goods -->
+        <!-- prettier-ignore -->
+        <div
+    *ngIf="
+        interestedCommodities && (
+                interestedCommodities.present.length > 0 ||
+                interestedCommodities.past.length > 0 ||
+                interestedCommodities.future.length > 0
+            );
+        then tableSection
+        else notFoundSection
+    "
+></div>
+        <ng-template #tableSection>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Date n Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        class="table-success"
+                        *ngFor="let commodity of interestedCommodities.present; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-8">{{ commodity.date.toLocaleString() }}</div>
+                                <div class="col-4">
+                                    <!-- Add the functionality -->
+                                    <button (click)="enterAuction(commodity)" class="btn btn-success">
+                                        Enter Auction
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="interestedCommodities.present.length > 0">
+                        <th></th>
+                    </tr>
+                    <tr
+                        class="table-warning"
+                        *ngFor="let commodity of interestedCommodities.future; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.date.toLocaleString() }}</td>
+                    </tr>
+                    <tr *ngIf="interestedCommodities.future.length > 0">
+                        <th></th>
+                    </tr>
+                    <tr
+                        class="table-danger"
+                        *ngFor="let commodity of interestedCommodities.past; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.date.toLocaleString() }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #notFoundSection>
+            <div class="text-center">
+                <span class="h4">No data found</span>
+            </div>
+        </ng-template>
+    </div>
+
+    <div *ngIf="toggleClassHeadings">
+        <!-- Area of users own data -->
+        <!-- Container with the information of the table -->
+        <div
+            class="container"
+            *ngIf="
+                userCommodities &&
+                (userCommodities.present.length > 0 ||
+                    userCommodities.past.length > 0 ||
+                    userCommodities.future.length > 0)
+            "
+        >
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-success text-center text-success">
+                            Count : {{ userCommodities.present.length || 0 }}
+                        </div>
+                        <div class="col-6">Current Auction</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-warning text-center text-warning">
+                            Count : {{ userCommodities.future.length || 0 }}
+                        </div>
+                        <div class="col-6">Future Auction</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6 border border-danger text-center text-danger">
+                            Count : {{ userCommodities.past.length || 0 }}
+                        </div>
+                        <div class="col-6">Past Auction</div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- Container to refresh the information -->
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4 text-center">
+                <button class="btn btn-primary" (click)="refreshOwnTable()">Refresh</button>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- Table about users goods -->
+        <!-- prettier-ignore -->
+        <div
+    *ngIf="
+        userCommodities && (
+                userCommodities.present.length > 0 ||
+                userCommodities.past.length > 0 ||
+                userCommodities.future.length > 0
+            );
+        then usersTableSection
+        else usersNotFoundSection
+    "
+></div>
+        <ng-template #usersTableSection>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Base Price</th>
+                        <th scope="col">Date n Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        class="table-success"
+                        *ngFor="let commodity of userCommodities.present; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-8">{{ commodity.date.toLocaleString() }}</div>
+                                <div class="col-sm-4">
+                                    <button
+                                        (click)="startAuction(commodity)"
+                                        class="btn btn-success"
+                                    >
+                                        Start
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="userCommodities.present.length > 0">
+                        <th></th>
+                    </tr>
+                    <tr
+                        class="table-warning"
+                        *ngFor="let commodity of userCommodities.future; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.date.toLocaleString() }}</td>
+                    </tr>
+                    <tr *ngIf="userCommodities.future.length > 0">
+                        <th></th>
+                    </tr>
+                    <tr
+                        class="table-danger"
+                        *ngFor="let commodity of userCommodities.past; let i = index"
+                    >
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ commodity.title }}</td>
+                        <td>{{ commodity.quantity }}</td>
+                        <td>{{ commodity.basePrice }}</td>
+                        <td>{{ commodity.date.toLocaleString() }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #usersNotFoundSection>
+            <div class="text-center">
+                <span class="h4">No data found</span>
+            </div>
+        </ng-template>
+    </div>
+</div>

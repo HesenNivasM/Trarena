@@ -1,0 +1,87 @@
+<div>
+  <article class="card-body mx-auto" style="max-width: 400px;">
+    <h4 class="card-title mt-3 text-center">Create Account</h4>
+    <div *ngIf="error" class="card bg-danger p-2 text-center text-white">
+      {{ error }}
+    </div>  
+    <div *ngIf="success" class="card bg-success p-2 text-center text-white">
+      {{ success }}
+    </div>  
+    <br>
+    <div>
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+        </div>
+        <input
+          [(ngModel)]="userDetail.name"
+          class="form-control"
+          placeholder="Full name"
+          type="text"
+        />
+      </div>      
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+        </div>
+        <input
+          [(ngModel)]="userDetail.email"
+          class="form-control"
+          placeholder="Email address"
+          type="email"
+        />
+      </div>      
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+        </div>
+        <select class="custom-select" style="max-width: 75px;">
+          <option selected="">+91</option>
+        </select>
+        <input
+          [(ngModel)]="userDetail.mobileNumber"
+          class="form-control"
+          placeholder="Phone number"
+          type="text"
+        />
+      </div>      
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+        </div>
+        <select class="form-control" [(ngModel)]="userDetail.jobType">
+          <option selected=""> Select job type</option>
+          <option *ngFor="let jobType of jobTypes" [value]="jobType">{{jobType}}</option>
+        </select>
+      </div>      
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+        </div>
+        <input
+          [(ngModel)]="userDetail.password"
+          class="form-control"
+          placeholder="Create password"
+          type="password"
+        />
+      </div>      
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+        </div>
+        <input
+          [(ngModel)]="repeatPassword"
+          class="form-control"
+          placeholder="Repeat password"
+          type="password"
+        />
+      </div>      
+      <div class="form-group">
+        <button [disabled]="userDetail.name.length === 0 || userDetail.email.length === 0 || userDetail.mobileNumber.length === 0 || userDetail.jobType.length === 0 || userDetail.password.length === 0 || repeatPassword.length === 0" (click)="submitForm()" class="btn btn-primary btn-block">
+          Create Account
+        </button>
+      </div>      
+    </div>
+  </article>
+</div>
+<br><br>

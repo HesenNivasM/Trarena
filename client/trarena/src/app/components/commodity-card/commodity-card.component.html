@@ -1,0 +1,58 @@
+<div *ngIf="commodity">
+    <div class="card border-secondary mb-3">
+        <div class="card-body text-dark">
+            <img class="card-img-top" src="{{ commodity.imageUrl }}" alt="Card image" />
+            <h4 class="m-1 text-center">{{ commodity.title }}</h4>
+            <br />
+            <div *ngIf="toggleShow">
+                <span class="text-left font-weight-bold">Description:</span>
+                <span class="text-left">{{ commodity.description }}</span>
+            </div>
+            <div class="row mt-2">
+                <span class="col-4 text-left font-weight-bold">Bid Date:</span>
+                <span class="col-8 text-left">{{ commodity.date.toDateString() }}</span>
+            </div>
+            <div *ngIf="toggleShow" class="row mt-2">
+                <span class="col-4 text-left font-weight-bold">Quantity:</span>
+                <span class="col-8 text-left">{{ commodity.quantity }}</span>
+            </div>
+            <div *ngIf="toggleShow" class="row mt-2">
+                <span class="col-4 text-left font-weight-bold">Base Price:</span>
+                <span class="col-8 text-left">{{ commodity.basePrice }}</span>
+            </div>
+            <div *ngIf="toggleShow" class="row mt-2">
+                <span class="col-4 text-left font-weight-bold">Date of Creation:</span>
+                <span class="col-8 text-left">{{ dateOfCreation.toDateString() }}</span>
+            </div>
+            <div *ngIf="toggleShow" class="row mt-2">
+                <span class="col-4 text-left font-weight-bold">Number of users interested:</span>
+                <span class="col-8 text-left">{{ commodity.interestedUsers.length }}</span>
+            </div>
+            <div *ngIf="toggleShow && parentClassName === 'buy-all'">
+                <div class="row mt-2">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <button
+                            *ngIf="!interestedBoolean"
+                            class="btn btn-success"
+                            (click)="interestedInBidding()"
+                        >
+                            Interested
+                        </button>
+                        <button
+                            *ngIf="interestedBoolean"
+                            class="btn btn-danger"
+                            (click)="interestedInBidding()"
+                        >
+                            Not Interested
+                        </button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer border-secondary text-right">
+            <button class="btn btn-secondary" (click)="toggleShowHide()">{{ toggleWord }}</button>
+        </div>
+    </div>
+</div>

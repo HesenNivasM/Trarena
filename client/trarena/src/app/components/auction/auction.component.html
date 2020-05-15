@@ -1,0 +1,129 @@
+<div class="container">
+    <div class="row m-3">
+        <div class="col-4"></div>
+        <div class="col-4 text-center">
+            <h3>Auction</h3>
+        </div>
+        <div class="col-4 text-right">
+            <div class="btn btn-danger" (click)="exitAuction()">Exit Auction</div>
+        </div>
+    </div>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="inbox_people d-none d-lg-block d-xl-none">
+                        <div class="headind_srch">
+                            <div class="recent_heading">
+                                <h4>Chat Members</h4>
+                            </div>
+                            <div class="srch_bar">
+                                <div class="stylish-input-group">
+                                    <input type="text" class="search-bar" placeholder="Search" />
+                                    <span class="input-group-addon">
+                                        <button type="button">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inbox_chat">
+                            <div
+                                class="chat_list"
+                                *ngFor="let member of auctionRoom.members"
+                                [ngClass]="{
+                                    'bg-primary': auctionRoom.commodity.user._id === member._id
+                                }"
+                            >
+                                <div class="chat_people">
+                                    <div class="chat_img">
+                                        <img
+                                            src="https://ptetutorials.com/images/user-profile.png"
+                                            alt="sunil"
+                                        />
+                                    </div>
+                                    <div class="chat_ib">
+                                        <h5>
+                                            {{ member.name }}
+                                            <span class="chat_date">{{ member.jobType }}</span>
+                                        </h5>
+                                        <!-- <p>
+                                            Test, which is a new approach to have all solutions
+                                            astrology under one roof.
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="mesgs">
+                        <div class="msg_history">
+                            <div *ngFor="let message of auctionRoom.messages">
+                                <!-- prettier-ignore -->
+                                <div *ngIf="message.user._id === user._id; then sentMsg else receivedMsg">
+                                </div>
+                                <ng-template #receivedMsg>
+                                    <div class="incoming_msg">
+                                        <div class="received_msg">
+                                            <div class="received_withd_msg">
+                                                <span class="time_date pb-2">{{
+                                                    message.user.name
+                                                }}</span>
+                                                <p>
+                                                    {{ message.message }}
+                                                </p>
+                                                <span class="time_date">{{ message.date }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #sentMsg>
+                                    <div class="outgoing_msg">
+                                        <div class="sent_msg">
+                                            <p>{{ message.message }}</p>
+                                            <span class="time_date">{{ message.date }}</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="type_msg">
+                            <div class="input_msg_write">
+                                <input
+                                    type="text"
+                                    [(ngModel)]="message"
+                                    class="write_msg"
+                                    placeholder="Type a message"
+                                />
+                                <button (click)="sendMessage()" class="msg_send_btn" type="button">
+                                    <i class="fas fa-angle-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="auctionRoom.commodity.user._id === user._id" class="text-center top_spac">
+            <div *ngIf="auctionRoom.members" class="row">
+                <div class="col-3">
+                    <h5>Sell To :</h5>
+                </div>
+                <div class="col-6">
+                    <select [(ngModel)]="sellToUser" class="form-control form-control-sm">
+                        <option *ngFor="let user of auctionRoom.members" [value]="user._id">
+                            {{ user.name }}
+                        </option></select
+                    >
+                </div>
+                <div class="col-3">
+                    <button (click)="sellCommodity()" class="btn btn-success">Sell</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
