@@ -19,6 +19,7 @@ import { BuyAllComponent } from './components/buy-all/buy-all.component';
 import { CartComponent } from './components/cart/cart.component';
 import { AuctionComponent } from './components/auction/auction.component';
 import { BidComponent } from './components/bid/bid.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { BidComponent } from './components/bid/bid.component';
     BuyAllComponent,
     CartComponent,
     AuctionComponent,
-    BidComponent
+    BidComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
