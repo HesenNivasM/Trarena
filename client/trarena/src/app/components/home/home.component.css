@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+}
+.banner{
+    background: url("../images/bg.jpeg");
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+.main-text{
+    margin-top: 22%;
+    transform: translateY(-15%);
+}
+.main-text p{
+    font-size: 2em;
+    font-weight: 300;
+    color: rgba(250, 246, 246, 0.822);
+    letter-spacing: 2px;
+}
