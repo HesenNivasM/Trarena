@@ -24,6 +24,7 @@ app.use(express.json());
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public/uploads')));
+app.use(express.static(path.join(__dirname, 'public/images')));
 
 app.use('/api/users/', require('./routes/users'));
 app.use('/api/commodity/', require('./routes/commodity'));
